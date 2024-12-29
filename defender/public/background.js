@@ -10,7 +10,7 @@ const extractUrls = (text) => {
 };
 
 const fetchHasContents = (domain) => {
-    fetch(`http://localhost:3000/has-contents/${domain}`).then(response => {
+    fetch(`https://safe3-dvgvekd7g2ftcbaw.canadacentral-01.azurewebsites.net/has-contents/${domain}`).then(response => {
         response.json().then(data => {
             if (data) {
                 chrome.scripting.executeScript({
