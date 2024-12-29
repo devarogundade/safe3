@@ -1,0 +1,22 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", serif;
+  transition: .2s;
+  text-decoration: none;
+}
+
+body {
+  background: var(--bg);
+}
+
+section {
+  display: flex;
+  justify-content: center;
+}
+
+.app_width {
+  width: 1400px;
+  max-width: calc(100% - 40px);
+}

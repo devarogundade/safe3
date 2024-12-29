@@ -1,0 +1,21 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", serif;
+  transition: .2s;
+}
+
+body {
+  width: 320px;
+  background: var(--bg);
+}
+
+section {
+  display: flex;
+  justify-content: center;
+}
+
+.app_width {
+  width: calc(100% - 40px);
+}

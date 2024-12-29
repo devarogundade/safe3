@@ -1,0 +1,46 @@
+{
+  "manifest_version": 3,
+  "name": "Defender - Safe3",
+  "version": "1.0",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; style-src 'self' https://*; font-src https://*; img-src https://*; connect-src https://*"
+  },
+  "description": "A product of Safe3.",
+  "icons": {
+    "32": "icons/icon32.png",
+    "64": "icons/icon64.png"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://*/*",
+    "http://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": {
+      "32": "icons/icon32.png",
+      "64": "icons/icon64.png"
+    },
+    "default_popup": "index.html",
+    "default_title": "Defender"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/icon32.png", "icons/icon64.png"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
