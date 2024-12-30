@@ -6,10 +6,10 @@ import ChevronRightIcon from "@/components/icons/ChevronRightIcon.vue";
 
 import { ref } from "vue";
 
-const activated = ref<boolean>(false);
+const activated = ref<boolean>(true);
 
 const toggleActivation = () => {
-  chrome.runtime.sendMessage("toggleActivation", {}, (isActivated) => {
+  chrome.runtime.sendMessage({ action: "toggleActivation" }, (isActivated) => {
     activated.value = isActivated;
   });
 };

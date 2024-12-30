@@ -36,7 +36,7 @@ export default defineManifest(async () => ({
   content_scripts: [
     {
       matches: ["https://*/*"],
-      js: ["content.ts"],
+      js: [],
     },
   ],
   web_accessible_resources: [

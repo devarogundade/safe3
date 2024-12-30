@@ -47,21 +47,21 @@ svg.appendChild(path4);
 
 safe3_box.appendChild(svg);
 
-const paragraph = document.createElement("p");
-paragraph.innerHTML = "Contents from Defender.";
-safe3_box.appendChild(paragraph);
+const safe3_paragraph = document.createElement("p");
+safe3_paragraph.innerHTML = "Contents from Defender.";
+safe3_box.appendChild(safe3_paragraph);
 
 safe3_container.appendChild(safe3_box);
 
-const button = document.createElement("button");
-button.textContent = "OPEN";
-button.id = "action";
-safe3_container.appendChild(button);
+const safe3_button = document.createElement("button");
+safe3_button.textContent = "OPEN";
+safe3_button.id = "action";
+safe3_container.appendChild(safe3_button);
 
 document.body.appendChild(safe3_container);
 
-const style = document.createElement("style");
-style.innerHTML = `
+const safe3_style = document.createElement("style");
+safe3_style.innerHTML = `
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 .safe3_container *, .safe3_container {
@@ -125,7 +125,7 @@ style.innerHTML = `
 }
 `;
 
-document.head.appendChild(style);
+document.head.appendChild(safe3_style);
 
 document.getElementById("action")?.addEventListener("click", function () {
   chrome.runtime.sendMessage({ action: "openPopup" });
