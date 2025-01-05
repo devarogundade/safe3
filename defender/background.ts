@@ -25,6 +25,20 @@ const toggleActivation = async () => {
 
   updateActivation({ state: !Boolean(activation) });
 
+  chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
+    if (tabs.length > 0) {
+      const activeTab = tabs[0];
+      const domains = extractDomains(activeTab.url);
+
+      const { activation } = await chrome.storage.local.get("activation");
+
+      if (activation && domains.length > 0) {
+        activeDomain = domains[0];
+        fetchHasContents(domains[0], activeTab);
+      }
+    }
+  });
+
   await chrome.storage.local.set({ activation: !Boolean(activation) });
 };
 
