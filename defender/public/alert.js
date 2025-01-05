@@ -128,5 +128,5 @@ safe3_style.innerHTML = `
 document.head.appendChild(safe3_style);
 
 document.getElementById("action")?.addEventListener("click", function () {
-  chrome.runtime.sendMessage({ action: "openPopup" });
+  chrome.runtime.sendMessage({ action: "open-popup" });
 });

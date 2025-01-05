@@ -2,7 +2,7 @@
 
 import { AppService } from './app.service';
 import { Profile } from './database/schemas/profile';
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ContentDto, ContentUpdateDto, ProfileDto } from './types';
 import { Content } from './database/schemas/content';
 
@@ -41,7 +41,7 @@ export class AppController {
   }
 
   @Get('/contents')
-  async getContents(@Param('domain') domain: string): Promise<Content[]> {
+  async getContents(@Query('domain') domain: string): Promise<Content[]> {
     return this.appService.getContents(domain);
   }
 

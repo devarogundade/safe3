@@ -1,0 +1,144 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+:root {
+  --primary: rgba(229, 200, 46, 1);
+  --primary-light: rgba(192, 180, 119, 1);
+
+  --tx-normal: rgba(238, 241, 248, 1);
+  --tx-dimmed: rgba(108, 110, 115, 1);
+  --tx-semi: rgba(139, 144, 158, 1);
+
+  --bg: rgba(20, 20, 21, 1);
+  --bg-darkest: rgba(32, 34, 39, 1);
+  --bg-darker: rgba(26, 28, 30, 1);
+  --bg-dark: rgba(24, 25, 27, 1);
+
+  --sm-red: #f06979;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", serif;
+  transition: 0.2s;
+  text-decoration: none;
+}
+
+body {
+  background: var(--bg);
+}
+
+section {
+  display: flex;
+  justify-content: center;
+}
+
+.app_width {
+  width: 100%;
+  max-width: 1200px;
+}
+
+section:first-child {
+  border-bottom: 1px solid var(--bg-darkest);
+}
+
+header {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header h3 {
+  color: var(--tx-normal);
+  font-weight: 500;
+  font-size: 20px;
+}
+
+header button {
+  height: 40px;
+  border-radius: 4px;
+  background: var(--primary);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  justify-content: center;
+  transition: 0.2s;
+  gap: 10px;
+}
+
+.options_section {
+  padding: 60px 0;
+}
+
+.options {
+  margin-top: 50px;
+}
+
+.option {
+  margin-bottom: 50px;
+  background: var(--bg-dark);
+  padding: 30px;
+  border-radius: 16px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 60px;
+  align-items: flex-end;
+}
+
+.option button {
+  height: 40px;
+  width: 200px;
+  border-radius: 4px;
+  background: var(--primary-light);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+  gap: 10px;
+}
+
+.option h3 {
+  color: var(--tx-normal);
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.option h3 span {
+  color: var(--primary);
+}
+
+.option:last-child h3 span {
+  color: var(--sm-red);
+}
+
+.option p {
+  color: var(--tx-dimmed);
+  font-size: 16px;
+  margin-top: 14px;
+  line-height: 28px;
+  font-weight: 500;
+}
+
+.products {
+  color: var(--tx-normal);
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.link {
+  margin-top: 10px;
+  color: var(--tx-dimmed);
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 500;
+}

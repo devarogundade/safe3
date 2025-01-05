@@ -64,6 +64,8 @@ watch(domain, (newDomain) => {
                 <input type="text" placeholder="Enter a keyword" v-model="search">
             </div>
 
+            <p class="loading" v-if="loading">Loading...</p>
+
             <div class="videos">
                 <div class="video" v-for="content in contents" :key="content.tokenId"
                     @click="openContent(content.tokenId)">
@@ -236,5 +238,12 @@ watch(domain, (newDomain) => {
 
 .info .stat:last-child span {
     color: var(--sm-red);
+}
+
+.loading {
+    text-align: center;
+    color: var(--tx-semi);
+    font-size: 12px;
+    padding: 100px 0;
 }
 </style>

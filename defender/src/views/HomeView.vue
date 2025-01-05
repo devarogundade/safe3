@@ -3,54 +3,59 @@ import MoreIcon from "@/components/icons/MoreIcon.vue";
 import PowerIcon from "@/components/icons/PowerIcon.vue";
 import WalletIcon from "@/components/icons/WalletIcon.vue";
 import ChevronRightIcon from "@/components/icons/ChevronRightIcon.vue";
-import type { ActivationData } from "@/scripts/types";
+import type { activationData } from "@/scripts/types";
 import { getTokenBalance } from "../scripts/erc20";
 import Converter from "@/scripts/converter";
 
 import { onMounted, ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter } from 'vue-router';
 import BigNumber from "bignumber.js";
 
 const router = useRouter();
 
 const activated = ref<boolean>(true);
-
-const address = ref<`0x${string}` | null>(null);
-const username = ref<`${string}.edu` | null>(null);
-
 const safePoints = ref<any>(new BigNumber(0));
 
-const toggleActivation = () => {
-  chrome.runtime.sendMessage({ action: "toggleActivation" });
+const toggleactivation = () => {
+  chrome.runtime.sendMessage({ action: "toggle-activation" });
 };
 
 onMounted(async () => {
-  address.value = localStorage.getItem('address') as `0x${string}` | null;
-  username.value = localStorage.getItem('username') as `${string}.edu` | null;
+  chrome.runtime.sendMessage({ action: "init" });
 
-  if (!address.value || !username.value) { return router.push('/login'); }
+  //  safePoints.value = await getTokenBalance(address.value); 
 
-  safePoints.value = await getTokenBalance(address.value);
+  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    console.log('message', message);
+
+    if (message.action == "activation-data") {
+      activated.value = message.data.state;
+    }
+
+    if (message.action == "open-contents") {
+      router.push(`/contents?domain=${message.data}`);
+    }
+  });
 });
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.action == "ACTIVATION-DATA") {
-    const data = message.data as ActivationData;
-    activated.value = data.state;
-  }
-});
+const connect = () => {
+
+};
 </script>
 
 <template>
   <section>
     <div class="app_width">
       <div class="toolbar">
-        <MoreIcon />
-        <WalletIcon />
+        <RouterLink :to="`/contents?domain=${'opensea.io'}`">
+          <MoreIcon />
+        </RouterLink>
+        <WalletIcon @click="connect" />
       </div>
 
       <div class="power">
-        <button @click="toggleActivation">
+        <button @click="toggleactivation"
+          :style="{ background: activated ? 'var(--primary-light)' : 'var(--bg-darker)' }">
           <PowerIcon />
         </button>
 
@@ -62,7 +67,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           <div class="user">
             <div class="bio">
               <img src="/images/user.png" alt="user">
-              <p>{{ username }}</p>
+              <p>{{ 'Test User' }}</p>
             </div>
             <p class="level">Lite</p>
           </div>
@@ -108,7 +113,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   border-radius: 50px;
   cursor: pointer;
   border: none;
-  background: var(--bg-darker);
 }
 
 .power svg {

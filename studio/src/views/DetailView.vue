@@ -6,7 +6,7 @@ import Converter from '@/scripts/converter';
 import { ContentType, type Content } from '@/scripts/types';
 import { useWalletStore } from '@/stores/wallet';
 import BigNumber from 'bignumber.js';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router'; import { useToast } from 'vue-toast-notification';
 
 import 'vue-toast-notification/dist/theme-sugar.css';
@@ -62,9 +62,7 @@ const dislike = async () => {
 const view = async () => {
     const tokenId = route.params.id;
     if (!tokenId) return;
-    if (!walletStore.address) return;
-
-    viewContent(Number(tokenId), walletStore.address);
+    viewContent(Number(tokenId), walletStore.address ? walletStore.address : '0x');
 };
 
 const tip = async () => {
@@ -98,6 +96,8 @@ onMounted(() => {
     loading.value = true;
     const tokenId = route.params.id;
     if (tokenId) getContent(Number(tokenId));
+
+    view();
 });
 </script>
 

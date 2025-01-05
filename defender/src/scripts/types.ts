@@ -25,7 +25,7 @@ export enum ContentCategory {
   Educative = "Educative",
 }
 
-export interface ActivationData {
+export interface activationData {
   state: boolean;
 }
 

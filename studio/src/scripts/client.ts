@@ -67,7 +67,7 @@ export const viewContent = async (
   address: `0x${string}`
 ): Promise<any> => {
   try {
-    const response = await api.post(`/update-dislikes`, {
+    const response = await api.post(`/update-views`, {
       tokenId,
       address,
     });
