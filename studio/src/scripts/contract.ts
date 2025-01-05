@@ -6,13 +6,13 @@ import {
   writeContract,
 } from "@wagmi/core";
 import type BigNumber from "bignumber.js";
-import { decodeEventLog, parseAbiItem } from "viem";
+import { erc20Abi } from "viem";
+
+export const safe3TokenId: `0x${string}` =
+  "0x9A19e8574668dca5C4750eB642C614b7e5836cF4";
 
 export const safe3Id: `0x${string}` =
-  "0xc382e9881a8d87b9125c56fecb0309f4c7716cca";
-
-export const safe3PointsId: `0x${string}` =
-  "0x42975a0b9343199ec47e62F2829F2c3E3e26230c";
+  "0xA737dd6fB5Fa617540e1A359b0100Fa7875E9518";
 
 interface Studio {
   claimedPoints: BigNumber;
@@ -25,7 +25,7 @@ const Safe3Contract = {
       const result = await writeContract(config, {
         abi: safe3Abi,
         address: safe3Id,
-        functionName: "initStudio",
+        functionName: "intStudio",
       });
 
       const receipt = await waitForTransactionReceipt(config, { hash: result });
@@ -47,11 +47,12 @@ const Safe3Contract = {
       });
 
       const receipt = await waitForTransactionReceipt(config, { hash: result });
-      const { topics, data } = receipt.logs[0];
+      const { topics } = receipt.logs[0];
 
-      const { args } = decodeEventLog({ abi: safe3Abi, topics, data });
+      console.log(topics);
+      console.log(Number(topics[3]));
 
-      return (args as any).tokenId;
+      return Number(topics[3]);
     } catch (error) {
       console.log(error);
       return null;
@@ -76,7 +77,29 @@ const Safe3Contract = {
     }
   },
 
-  async tip(content: number, points: BigNumber): Promise<`0x${string}` | null> {
+  async approve(spender: `0x${string}`, amount: any) {
+    try {
+      const result = await writeContract(config, {
+        abi: erc20Abi,
+        address: safe3TokenId,
+        functionName: "approve",
+        args: [spender, amount],
+      });
+
+      const receipt = await waitForTransactionReceipt(config, { hash: result });
+
+      return receipt.transactionHash;
+    } catch (error) {
+      console.log(error);
+
+      return null;
+    }
+  },
+
+  async tipContent(
+    content: number,
+    points: BigNumber
+  ): Promise<`0x${string}` | null> {
     try {
       const result = await writeContract(config, {
         abi: safe3Abi,

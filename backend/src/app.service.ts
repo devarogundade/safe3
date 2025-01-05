@@ -5,7 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Profile } from './database/schemas/profile';
 import { Content } from './database/schemas/content';
-import { ContentType } from './types';
+import { ContentType, ContentCategory } from './types';
 
 @Injectable()
 export class AppService {
@@ -60,6 +60,7 @@ export class AppService {
     image: string,
     file: string,
     type: ContentType,
+    category: ContentCategory,
     domains: string[],
     creator: `0x${string}`,
   ): Promise<Content> {
@@ -69,6 +70,7 @@ export class AppService {
       description,
       image,
       type,
+      category,
       domains,
       file,
       dislikes: [],

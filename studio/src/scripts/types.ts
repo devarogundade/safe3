@@ -11,6 +11,7 @@ export type Content = {
   description: string;
   image: string;
   type: ContentType;
+  category: ContentCategory;
   file: string;
   domains: string[];
   likes: `0x${string}`[];
@@ -22,4 +23,9 @@ export type Content = {
 export enum ContentType {
   Article = "Article",
   Video = "Video",
+}
+
+export enum ContentCategory {
+  Warning = "Warning",
+  Educative = "Educative",
 }

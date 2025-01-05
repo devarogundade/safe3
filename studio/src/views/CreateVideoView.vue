@@ -7,7 +7,7 @@ import { useToast } from 'vue-toast-notification';
 
 import { useRouter } from 'vue-router';
 import { createContent } from '@/scripts/client';
-import { ContentType } from "@/scripts/types";
+import { ContentType, ContentCategory } from "@/scripts/types";
 
 import Safe3Contract from '@/scripts/contract';
 import Storage from '@/scripts/storage';
@@ -23,15 +23,17 @@ const form = ref({
     title: "",
     description: "",
     domains: "",
-    
+
     video_file_url: null as string | null,
     video_file: null as File | null,
     video: null as string | null,
-  
+
     thumbnail_file_url: null as string | null,
     thumbnail_file: null as File | null,
-    thumbnail: null as string | null
-})
+    thumbnail: null as string | null,
+
+    category: ContentCategory.Warning
+});
 
 const selectThumbnail = (event: any) => {
     const files = event.target.files;
@@ -55,7 +57,11 @@ const selectVideo = (event: any) => {
     }
 };
 
-const upload =  async () => {
+const onCategoryChanged = (event: any) => {
+    form.value.category = event.target.value;
+};
+
+const upload = async () => {
     if (loading.value) return;
 
     if (!walletStore.address) {
@@ -70,12 +76,12 @@ const upload =  async () => {
         return toast.error('Enter a description!');
     }
 
-    if (form.value.domains.length == 0) {
-        return toast.error('Enter domain URL(s)!');
+    if (form.value.domains.split(',').length == 0) {
+        return toast.error('Enter domain(s)!');
     }
 
     loading.value = true;
-    
+
     if (form.value.thumbnail_file) {
         form.value.thumbnail = await Storage.awaitUpload(form.value.thumbnail_file, `thumbnail_${Date.now()}`);
     } else {
@@ -118,6 +124,7 @@ const upload =  async () => {
         form.value.thumbnail,
         form.value.video,
         ContentType.Video,
+        form.value.category,
         form.value.domains.replace(" ", "").split(','),
         walletStore.address
     );
@@ -132,15 +139,15 @@ const upload =  async () => {
     router.push('/profile');
 
     loading.value = false;
-}
+};
 </script>
 
 
 <template>
     <section>
         <div class="app_width">
-           <div class="upload">
-            <div class="title">
+            <div class="upload">
+                <div class="title">
                     <h3>Upload a Video Content.</h3>
                     <p>Connect your OpenCampus ID to safe3 studio.</p>
                 </div>
@@ -149,7 +156,8 @@ const upload =  async () => {
                     <div class="input file">
                         <label>Upload Video <span>*</span></label>
                         <div class="picker">
-                            <video autoplay controls loop v-if="form.video_file_url" :src="form.video_file_url" :alt="form.title"></video>
+                            <video autoplay controls loop v-if="form.video_file_url" :src="form.video_file_url"
+                                :alt="form.title"></video>
                             <input type="file" accept="video/*" @change="selectVideo">
                         </div>
                     </div>
@@ -161,8 +169,7 @@ const upload =  async () => {
 
                     <div class="input">
                         <label>Description <span>*</span></label>
-                        <textarea rows="8" v-model="form.description"
-                            placeholder="Your text goes here..."></textarea>
+                        <textarea rows="8" v-model="form.description" placeholder="Your text goes here..."></textarea>
                     </div>
 
                     <div class="input file">
@@ -173,18 +180,31 @@ const upload =  async () => {
                         </div>
                     </div>
 
+                    <div class="input">
+                        <label>Domain (seperated by comma) <span>*</span></label>
+                        <input type="text" placeholder="example.com, test.com" v-model="form.domains" />
+                    </div>
+
+                    <div class="input">
+                        <label>Category <span>*</span></label>
+                        <select @change="onCategoryChanged">
+                            <option :value="ContentCategory.Warning">Warning</option>
+                            <option :value="ContentCategory.Educative">Educative</option>
+                        </select>
+                    </div>
+
                     <div class="action">
                         <Button :text="'Upload'" @click="upload" :loading="loading" />
                     </div>
                 </div>
-           </div>
+            </div>
         </div>
     </section>
 </template>
 
 <style scoped>
 .upload {
-      padding: 40px 0;
+    padding: 40px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -222,7 +242,7 @@ const upload =  async () => {
 }
 
 .picker {
-    width: 240px;
+    width: 100%;
     height: 180px;
     position: relative;
     border-radius: 4px;
@@ -265,6 +285,16 @@ const upload =  async () => {
 }
 
 input {
+    height: 40px;
+    background: var(--bg-dark);
+    border: none;
+    outline: none;
+    padding: 0 10px;
+    border-radius: 4px;
+    color: var(--tx-normal);
+}
+
+select {
     height: 40px;
     background: var(--bg-dark);
     border: none;

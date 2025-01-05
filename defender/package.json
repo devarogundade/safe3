@@ -12,11 +12,16 @@
     "type-check": "vue-tsc --build"
   },
   "dependencies": {
+    "@wagmi/connectors": "^5.7.3",
+    "@wagmi/core": "^2.16.3",
+    "@web3modal/wagmi": "^5.1.11",
     "axios": "^1.7.9",
     "bignumber.js": "^9.1.2",
     "pinia": "^2.3.0",
+    "viem": "^2.22.2",
     "vue": "^3.5.13",
-    "vue-router": "^4.5.0"
+    "vue-router": "^4.5.0",
+    "wagmi": "^2.14.6"
   },
   "devDependencies": {
     "@crxjs/vite-plugin": "^2.0.0-beta.28",

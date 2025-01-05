@@ -22,8 +22,8 @@ const getContents = async (domain: string) => {
     loading.value = false;
 };
 
-const openContent = (id: string) => {
-    const url = `https://studio.safethree.xyz/contents/${id}`;
+const openContent = (tokenId: number) => {
+    const url = `https://studio.safethree.xyz/details/${tokenId}`;
 
     const popupWidth = 600; // Width of the popup
     const popupHeight = 500; // Height of the popup
@@ -65,10 +65,12 @@ watch(domain, (newDomain) => {
             </div>
 
             <div class="videos">
-                <div class="video" v-for="content in contents" :key="content.id" @click="openContent(content.id)">
+                <div class="video" v-for="content in contents" :key="content.tokenId"
+                    @click="openContent(content.tokenId)">
                     <div class="banner">
                         <img :src="content.image" :alt="content.title">
-                        <span>{{ content.type.toString() }} • {{ content.views }} views</span>
+                        <span>{{ content.category.toString() }} •{{ content.type.toString() }} • {{ content.views }}
+                            views</span>
                     </div>
                     <div class="info">
                         <p class="title">{{ content.title }}</p>

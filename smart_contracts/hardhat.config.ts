@@ -17,8 +17,8 @@ module.exports = {
     },
   },
   defaultNetwork: "opencampus",
-  opencampus: {
-    testnet: {
+  networks: {
+    opencampus: {
       url: EDU_RPC_URL,
       chainId: 656476,
       accounts: {

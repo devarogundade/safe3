@@ -12,10 +12,6 @@ export default defineManifest(async () => ({
   version: `${major}.${minor}.${patch}.${label}`,
   version_name: version,
   manifest_version: 3,
-  // content_security_policy: {
-  //   extension_pages:
-  //     "script-src 'self'; object-src 'self'; style-src 'self' https://*; font-src https://*; img-src https://*; connect-src https://*",
-  // },
   icons: {
     "32": "icons/icon32.png",
     "64": "icons/icon64.png",
@@ -33,12 +29,12 @@ export default defineManifest(async () => ({
     default_popup: "src/popup/index.html",
     default_title: name,
   },
-  content_scripts: [
-    {
-      matches: ["https://*/*"],
-      js: [],
-    },
-  ],
+  // content_scripts: [
+  // {
+  // matches: ["https://*/*"],
+  // js: [],
+  // },
+  // ],
   web_accessible_resources: [
     {
       resources: ["icons/icon32.png", "icons/icon64.png"],

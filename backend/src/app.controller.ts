@@ -34,6 +34,7 @@ export class AppController {
       data.image,
       data.file,
       data.type,
+      data.category,
       data.domains,
       data.creator,
     );

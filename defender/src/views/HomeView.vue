@@ -3,16 +3,42 @@ import MoreIcon from "@/components/icons/MoreIcon.vue";
 import PowerIcon from "@/components/icons/PowerIcon.vue";
 import WalletIcon from "@/components/icons/WalletIcon.vue";
 import ChevronRightIcon from "@/components/icons/ChevronRightIcon.vue";
+import type { ActivationData } from "@/scripts/types";
+import { getTokenBalance } from "../scripts/erc20";
+import Converter from "@/scripts/converter";
 
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
+import BigNumber from "bignumber.js";
+
+const router = useRouter();
 
 const activated = ref<boolean>(true);
 
+const address = ref<`0x${string}` | null>(null);
+const username = ref<`${string}.edu` | null>(null);
+
+const safePoints = ref<any>(new BigNumber(0));
+
 const toggleActivation = () => {
-  chrome.runtime.sendMessage({ action: "toggleActivation" }, (isActivated) => {
-    activated.value = isActivated;
-  });
+  chrome.runtime.sendMessage({ action: "toggleActivation" });
 };
+
+onMounted(async () => {
+  address.value = localStorage.getItem('address') as `0x${string}` | null;
+  username.value = localStorage.getItem('username') as `${string}.edu` | null;
+
+  if (!address.value || !username.value) { return router.push('/login'); }
+
+  safePoints.value = await getTokenBalance(address.value);
+});
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action == "ACTIVATION-DATA") {
+    const data = message.data as ActivationData;
+    activated.value = data.state;
+  }
+});
 </script>
 
 <template>
@@ -36,7 +62,7 @@ const toggleActivation = () => {
           <div class="user">
             <div class="bio">
               <img src="/images/user.png" alt="user">
-              <p>Abdul.edu</p>
+              <p>{{ username }}</p>
             </div>
             <p class="level">Lite</p>
           </div>
@@ -44,7 +70,7 @@ const toggleActivation = () => {
         </div>
         <div class="points">
           <p>Safe Points:</p>
-          <p>12,392</p>
+          <p>{{ Converter.toMoney(Converter.down(safePoints, 18)) }}</p>
         </div>
       </div>
 

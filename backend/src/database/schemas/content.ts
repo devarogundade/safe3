@@ -22,7 +22,10 @@ export class Content {
   @Prop({ required: true })
   type: string;
 
-  @Prop({ required: true, default: null })
+  @Prop({ required: true })
+  category: string;
+
+  @Prop({ required: false, default: null })
   file: string | null;
 
   @Prop({ required: true, type: Types.Array })

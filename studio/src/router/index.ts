@@ -3,6 +3,7 @@ import HomeView from "../views/HomeView.vue";
 import CreateArticleView from "../views/CreateArticleView.vue";
 import ProfileView from "@/views/ProfileView.vue";
 import CreateVideoView from "@/views/CreateVideoView.vue";
+import DetailView from "@/views/DetailView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +22,11 @@ const router = createRouter({
       path: "/create/video",
       name: "create-video",
       component: CreateVideoView,
+    },
+    {
+      path: "/details/:id",
+      name: "details",
+      component: DetailView,
     },
     {
       path: "/profile",

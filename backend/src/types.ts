@@ -5,6 +5,11 @@ export enum ContentType {
   Video = 'Video',
 }
 
+export enum ContentCategory {
+  Warning = 'Warning',
+  Educative = 'Educative',
+}
+
 export type ProfileDto = {
   username: `${string}.edu`;
   address: `0x${string}`;
@@ -15,11 +20,11 @@ export type ProfileDto = {
 export type ContentDto = {
   tokenId: number;
   title: string;
-  a;
   description: string;
   image: string;
   file: string | null;
   type: ContentType;
+  category: ContentCategory;
   domains: string[];
   creator: `0x${string}`;
 };
