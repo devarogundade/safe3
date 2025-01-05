@@ -128,7 +128,7 @@ onMounted(() => {
                 <div class="actions">
                     <Button :text="'Like'" @click="like" :loading="liking" />
                     <Button :text="'Dislike'" @click="dislike" :loading="disliking" />
-                    <Button :text="'Tip 5 $SAFE'" @click="tip" :loading="tipping" />
+                    <Button :text="'Tip $SAFE'" @click="tip" :loading="tipping" />
                 </div>
             </div>
         </div>
@@ -142,7 +142,7 @@ onMounted(() => {
 
 .image {
     width: 100%;
-    height: 300px;
+    height: 240px;
     overflow: hidden;
 }
 

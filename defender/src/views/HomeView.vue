@@ -3,7 +3,6 @@ import MoreIcon from "@/components/icons/MoreIcon.vue";
 import PowerIcon from "@/components/icons/PowerIcon.vue";
 import WalletIcon from "@/components/icons/WalletIcon.vue";
 import ChevronRightIcon from "@/components/icons/ChevronRightIcon.vue";
-import type { activationData } from "@/scripts/types";
 import { getTokenBalance } from "../scripts/erc20";
 import Converter from "@/scripts/converter";
 
@@ -26,8 +25,6 @@ onMounted(async () => {
   //  safePoints.value = await getTokenBalance(address.value); 
 
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    console.log('message', message);
-
     if (message.action == "activation-data") {
       activated.value = message.data.state;
     }
@@ -38,18 +35,14 @@ onMounted(async () => {
   });
 });
 
-const connect = () => {
-
-};
+const connect = () => { };
 </script>
 
 <template>
   <section>
     <div class="app_width">
       <div class="toolbar">
-        <RouterLink :to="`/contents?domain=${'opensea.io'}`">
-          <MoreIcon />
-        </RouterLink>
+        <MoreIcon />
         <WalletIcon @click="connect" />
       </div>
 

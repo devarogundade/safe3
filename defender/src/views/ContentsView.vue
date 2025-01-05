@@ -3,7 +3,7 @@ import MoreIcon from "@/components/icons/MoreIcon.vue";
 import WalletIcon from "@/components/icons/WalletIcon.vue";
 import SearchIcon from "@/components/icons/SearchIcon.vue";
 
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { fetchContents } from "@/scripts/client";
 import { type Content } from "@/scripts/types";
@@ -16,6 +16,8 @@ const search = ref<string>("");
 
 const getContents = async (domain: string) => {
     loading.value = true;
+
+    console.log('domain', domain);
 
     contents.value = await fetchContents(domain);
 
@@ -39,9 +41,12 @@ const openContent = (tokenId: number) => {
     window.open(url, "CenteredPopup", options);
 };
 
+onMounted(() => {
+    if (domain.value) getContents(domain.value);
+});
+
 watch(domain, (newDomain) => {
-    if (!newDomain) return;
-    getContents(newDomain);
+    if (newDomain) getContents(newDomain);
 });
 </script>
 
@@ -71,15 +76,16 @@ watch(domain, (newDomain) => {
                     @click="openContent(content.tokenId)">
                     <div class="banner">
                         <img :src="content.image" :alt="content.title">
-                        <span>{{ content.category.toString() }} •{{ content.type.toString() }} • {{ content.views }}
+                        <span>{{ content.category.toString() }} •{{ content.type.toString() }} • {{ content.views.length
+                            }}
                             views</span>
                     </div>
                     <div class="info">
                         <p class="title">{{ content.title }}</p>
                         <p class="description">{{ content.description }}</p>
                         <div class="stats">
-                            <div class="stat"><span>{{ content.likes }}</span>Likes</div>
-                            <div class="stat"><span>{{ content.dislikes }}</span>Dislikes</div>
+                            <div class="stat"><span>{{ content.likes.length }}</span>Likes</div>
+                            <div class="stat"><span>{{ content.dislikes.length }}</span>Dislikes</div>
                         </div>
                     </div>
                 </div>
@@ -213,6 +219,9 @@ watch(domain, (newDomain) => {
     font-size: 12px;
     font-weight: 500;
     margin-top: 4px;
+    line-clamp: 2;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .info .stats {

@@ -23,8 +23,6 @@ const updateActivation = (data: activationData) => {
 const toggleActivation = async () => {
   const { activation } = await chrome.storage.local.get("activation");
 
-  console.log("activation", activation);
-
   updateActivation({ state: !Boolean(activation) });
 
   await chrome.storage.local.set({ activation: !Boolean(activation) });
@@ -74,7 +72,13 @@ chrome.tabs.onActivated.addListener(() => {
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   if (message.action === "open-popup" && activeDomain) {
     chrome.action.openPopup();
-    chrome.runtime.sendMessage({ action: "open-contents", data: activeDomain });
+
+    setTimeout(() => {
+      chrome.runtime.sendMessage({
+        action: "open-contents",
+        data: activeDomain,
+      });
+    }, 1000);
   }
 
   if (message.action === "toggle-activation") {
